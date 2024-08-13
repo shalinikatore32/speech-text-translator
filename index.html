@@ -4,35 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Speech Translator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Speech Translator</h1>
+        <h1><i class="fas fa-microphone-alt"></i> Speech Translator</h1>
         
         <div class="language-selection">
-            <label for="input-lang">Select input language:</label>
-            <select id="input-lang">
-                <option value="en">English</option>
-                <option value="mr">Marathi</option>
-                <option value="hi">Hindi</option>
-                <option value="ml">Malayalam</option>
-                <option value="ta">Tamil</option>
-                <option value="te">Telugu</option>
-            </select>
-
-            <label for="output-lang">Select output language:</label>
-            <select id="output-lang">
-                <option value="en">English</option>
-                <option value="mr">Marathi</option>
-                <option value="hi">Hindi</option>
-                <option value="ml">Malayalam</option>
-                <option value="ta">Tamil</option>
-                <option value="te">Telugu</option>
-            </select>
+            <div>
+                <label for="input-lang">Select input language:</label>
+                <select id="input-lang">
+                    <option value="en">English</option>
+                    <option value="mr">Marathi</option>
+                    <option value="hi">Hindi</option>
+                    <option value="ml">Malayalam</option>
+                    <option value="ta">Tamil</option>
+                    <option value="te">Telugu</option>
+                </select>
+            </div>
+            <div>
+                <label for="output-lang">Select output language:</label>
+                <select id="output-lang">
+                    <option value="en">English</option>
+                    <option value="mr">Marathi</option>
+                    <option value="hi">Hindi</option>
+                    <option value="ml">Malayalam</option>
+                    <option value="ta">Tamil</option>
+                    <option value="te">Telugu</option>
+                </select>
+            </div>
         </div>
 
-        <button id="speak-btn">Speak</button>
+        <button id="speak-btn"><i class="fas fa-microphone"></i> Speak</button>
 
         <div class="text-areas">
             <textarea id="recognized-text" placeholder="Recognized speech will appear here..." readonly></textarea>
@@ -40,8 +45,8 @@
         </div>
 
         <div class="actions">
-            <button id="clear-btn">Clear</button>
-            <button id="copy-btn">Copy</button>
+            <button id="clear-btn"><i class="fas fa-broom"></i> Clear</button>
+            <button id="copy-btn"><i class="fas fa-copy"></i> Copy</button>
         </div>
 
         <div id="message" class="message"></div>

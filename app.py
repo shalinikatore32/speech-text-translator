@@ -1,12 +1,13 @@
-import os
-
+import io
 import speech_recognition as sr
 from flask import Flask, jsonify, request
 from googletrans import Translator
+from flask_cors import CORS
 from gtts import gTTS
 
 # Initialize the Flask application
 app = Flask(__name__)
+CORS(app)
 
 # Initialize speech recognizer and translator
 recognizer = sr.Recognizer()
@@ -33,17 +34,32 @@ def recognize_speech():
         return jsonify({'error': 'No audio file provided'}), 400
     
     audio_file = request.files['audio']
-    input_lang = request.form['input_lang']
+    input_lang = request.form.get('input_lang', 'en')  # Default to 'en' if not provided
+
+    print("Received audio file:", audio_file.filename)
+    print("Input language:", input_lang)
 
     try:
-        with sr.AudioFile(audio_file) as source:
+        # Read audio data from file
+        audio_data = audio_file.read()
+        audio_file.seek(0)
+
+        # Create a BytesIO object from the audio data
+        audio_file_wav = io.BytesIO(audio_data)
+        
+        # Recognize audio
+        with sr.AudioFile(audio_file_wav) as source:
             audio_data = recognizer.record(source)
             text = recognizer.recognize_google(audio_data, language=input_lang)
             return jsonify({'text': text})
     except sr.UnknownValueError:
         return jsonify({'error': 'Could not understand audio'}), 400
-    except sr.RequestError:
-        return jsonify({'error': 'Could not request results'}), 500
+    except sr.RequestError as e:
+        return jsonify({'error': f'Could not request results; {e}'}), 500
+    except ValueError as e:
+        return jsonify({'error': f'ValueError: {e}'}), 400
+    except Exception as e:
+        return jsonify({'error': f'An unexpected error occurred: {e}'}), 500
 
 @app.route('/translate', methods=['POST'])
 def translate_text():
